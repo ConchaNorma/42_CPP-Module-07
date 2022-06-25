@@ -6,13 +6,14 @@
 /*   By: cnorma <cnorma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 17:07:03 by cnorma            #+#    #+#             */
-/*   Updated: 2022/06/25 10:00:50 by cnorma           ###   ########.fr       */
+/*   Updated: 2022/06/25 14:07:08 by cnorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <iostream>
+#include <exception>
 
 template<class T>
 class Array
@@ -22,7 +23,7 @@ private:
 	T *array;
 
 public:
-	Array()
+	Array(void)
 	{
 		m_length = 0;
 		array = nullptr;
@@ -34,25 +35,43 @@ public:
 		array = new T[n];
 	}
 
-		Conv( void );
-	Conv( char* const arg );
-	Conv( Conv const & rhs );
-	Conv const operator=(Conv const & rhs);
-	~Conv( void );
-}
-
-template< typename T >
-void	iter(T *array, size_t lenght, void (*function) (T &))
-{
-	for (size_t i = 0; i < lenght; i++)
+	Array(const Array<T>& oth) : m_length(oth.m_length), array(new T[oth.m_length])
 	{
-		function(array[i]);
+		for (int i = 0; i < m_length; i++)
+			array[i] = oth.array[i];
 	}
-	return ;
-}
 
-template< typename T >
-void print(T arg)
-{
-	std::cout << arg << std::endl;
-}
+	Array<T> operator=( const Array<T>& oth)
+	{
+		if (this == &oth)
+			return *this;
+		if (this->array)
+			delete [] this->array;
+		this->array = nullptr;
+		m_length = oth.m_length;
+		if (!oth.array && !oth.m_length)
+			return *this;
+		array = new T[oth.m_length];
+		for (int i = 0; i < m_length; i++)
+			array[i] = oth.array[i];
+		return *this;
+	}
+
+	T& operator[](int index)
+    {
+		if (!array || index >= m_length || index < 0)
+			throw std::out_of_range("Out of range of array values");
+		return array[index];
+    }
+
+	~Array()
+    {
+        if (array)
+			delete[] array;
+    }
+
+	int size() const;
+};
+
+template <typename T>
+int Array<T>::size() const { return m_length; }

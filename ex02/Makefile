@@ -6,11 +6,11 @@
 #    By: cnorma <cnorma@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 07:57:16 by cnorma            #+#    #+#              #
-#    Updated: 2022/06/22 07:44:05 by cnorma           ###   ########.fr        #
+#    Updated: 2022/06/25 12:41:09 by cnorma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME 		=	iter
+NAME 		=	array
 
 SRC			=	main.cpp
 
@@ -20,7 +20,7 @@ OBJ_DIR		=	./obj/
 
 OBJ			=	$(patsubst $(SRC_DIR)%, $(OBJ_DIR)%, $(SRC:.cpp=.o))
 
-HEADER		=	./iter.hpp
+HEADER		=	./Array.hpp
 
 CC			=	c++
 
